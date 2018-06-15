@@ -5,15 +5,15 @@ pub mod learn {
     use std::io::BufReader;
     use std::fs::OpenOptions;
 
-    pub fn util_file() {
+    pub fn util_file(path: String) -> Result<(), String> {
         // Подсчет слов в строке – подсчитывает количество отдельных слов в строке.
         // Для дополнительной сложности прочитайте эти строки из текстового файла и сгенерируйте сводку
         let mut file = match OpenOptions::new()
             .read(true)
             .write(true)
-            .open("src/text.txt") {
+            .open(path) {
             Ok(t) => t,
-            Err(_) => panic!("Не удалось открыть файл"),
+            Err(err) => return Err(err.to_string()),
         };
         let reader = BufReader::new(file.try_clone().unwrap());
         let lines_iter = reader.lines();
@@ -40,7 +40,11 @@ pub mod learn {
             result = result + " ||| Слов: " + &*item.1.to_string();
             i += 1;
         }
-        file.write(result.as_bytes()).unwrap();
+        //file.write(result.as_bytes()).unwrap();
+        match file.write(result.as_bytes()) {
+            Ok(_) => Ok(()),
+            Err(err) => return Err(err.to_string())
+        }
     }
 
     pub fn string_reverse() {
