@@ -1,13 +1,43 @@
 
-pub mod learn {
+pub mod step_2 {
+
+}
+
+pub mod step_1 {
+
     use std::io;
     use std::io::prelude::*;
     use std::io::BufReader;
     use std::fs::OpenOptions;
 
+    pub fn string_reverse() {
+        // Функция принимает строку (read_line) и реверсирует её
+        println!("Введите строку:");
+        let mut varstring = String::new();
+        io::stdin().read_line(&mut varstring).expect("Не удалось прочитать строку");
+        let mut pt = String::new();
+        for item in varstring.chars().rev() {
+            pt = pt + &item.to_string();
+        }
+        println!("{}", pt);
+    }
+
+    /// Анализирует файл и записываем результаты в конец файла
+    ///
+    /// Подсчет слов в строке – подсчитывает количество отдельных слов в строке.
+    /// Для дополнительной сложности прочитайте эти строки из текстового файла и сгенерируйте сводку
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// match util_file("src/text.txt".to_string()) {
+    ///     Ok(_) => println!("Файл успешно обработан"),
+    ///     Err(err) => println!("Ошибка: {}", err)
+    /// }
+    /// ```
+
     pub fn util_file(path: String) -> Result<(), String> {
-        // Подсчет слов в строке – подсчитывает количество отдельных слов в строке.
-        // Для дополнительной сложности прочитайте эти строки из текстового файла и сгенерируйте сводку
+
         let mut file = match OpenOptions::new()
             .read(true)
             .write(true)
@@ -45,17 +75,5 @@ pub mod learn {
             Ok(_) => Ok(()),
             Err(err) => return Err(err.to_string())
         }
-    }
-
-    pub fn string_reverse() {
-        // Функция принимает строку (read_line) и реверсирует её
-        println!("Введите строку:");
-        let mut varstring = String::new();
-        io::stdin().read_line(&mut varstring).expect("Не удалось прочитать строку");
-        let mut pt = String::new();
-        for item in varstring.chars().rev() {
-            pt = pt + &item.to_string();
-        }
-        println!("{}", pt);
     }
 }
